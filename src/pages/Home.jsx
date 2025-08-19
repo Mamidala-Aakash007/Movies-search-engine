@@ -26,21 +26,20 @@ function Home() {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-    if (!searchQuery.trim()) return
-    if (loading) return
+    if (!searchQuery.trim()) return;
+    if (loading) return;
 
     setLoading(true);
     try {
-      const searchResults= await searchMovies(searchQuery)
+      const searchResults = await searchMovies(searchQuery);
       setMovies(searchResults);
-      setError(null)
+      setError(null);
     } catch (err) {
       console.log(err);
-        setError("Failed to search movies...");
+      setError("Failed to search movies...");
     } finally {
       setLoading(false);
     }
-  
   };
 
   return (
@@ -58,7 +57,7 @@ function Home() {
         </button>
       </form>
 
-    {error && <div className="error-message">{erroe}</div>}
+      {error && <div className="error-message">{error}</div>}
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
