@@ -33,7 +33,7 @@ function Home() {
     try {
       const searchResults = await searchMovies(searchQuery);
       setMovies(searchResults);
-      setError(null);
+      setError(searchResults.length === 0 ? "No movies found." : null);
     } catch (err) {
       console.log(err);
       setError("Failed to search movies...");
@@ -58,12 +58,22 @@ function Home() {
       </form>
 
       {error && <div className="error-message">{error}</div>}
+
       {loading ? (
         <div className="loading">Loading...</div>
       ) : (
         <div className="movies-grid">
           {movies.map((movie) => (
-            <MovieCard movie={movie} key={movie.id} />
+            <MovieCard
+              key={movie.imdbID}
+              movie={{
+                id: movie.imdbID,
+                title: movie.Title,
+                poster_path: movie.Poster,
+                release_date: movie.Year,
+                overview: movie.Type,
+              }}
+            />
           ))}
         </div>
       )}
